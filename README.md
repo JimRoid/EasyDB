@@ -11,7 +11,7 @@ Android SharePreference
    -------------------------
    
    ```groovy
-   maven { url 'https://github.com/JimRoid/loopjhandler/raw/develop/' }
+   maven { url 'https://github.com/JimRoid/EasyDB/raw/master/' }
    ```
    
    ```groovy
