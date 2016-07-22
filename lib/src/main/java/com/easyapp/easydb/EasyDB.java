@@ -64,6 +64,11 @@ public class EasyDB {
         sharedPreferences.edit().putString(TOKEN, token).apply();
     }
 
+    public void Logout(){
+        sharedPreferences.edit().putBoolean(LOGIN, false).apply();
+        sharedPreferences.edit().putString(TOKEN, "").apply();
+    }
+
 
     public String getToken() {
         return sharedPreferences.getString(TOKEN, "");
