@@ -15,7 +15,7 @@ Android SharePreference
    ```
    
    ```groovy
-   compile 'com.easyapp.easydb:EasyDB:1.0'
+   compile 'com.easyapp.easydb:EasyDB:1.1'
    ```
    
 ### Sample
