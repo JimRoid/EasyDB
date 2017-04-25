@@ -22,7 +22,7 @@ public abstract class Model<T extends Model> {
     @SerializedName("uniqueId")
     private String uniqueId;
 
-    protected String getUniqueId() {
+    public String getUniqueId() {
         return uniqueId;
     }
 
@@ -31,7 +31,7 @@ public abstract class Model<T extends Model> {
     }
 
 
-    private String getGson() {
+    public String getGson() {
         Gson gson = new Gson();
         return gson.toJson(this);
     }
