@@ -20,10 +20,13 @@ public class EasyDB {
     private SharedPreferences sharedPreferences;
 
     public EasyDB(Context context) {
-        String package_name = context.getPackageName();
-        sharedPreferences = context.getSharedPreferences(package_name, Context.MODE_PRIVATE);
-        if (isFirst()) {
-            GenUUID();
+        if (context != null) {
+            String packageName = context.getPackageName();
+            sharedPreferences = context.getSharedPreferences(packageName, Context.MODE_PRIVATE);
+
+            if (isFirst()) {
+                GenUUID();
+            }
         }
     }
 
@@ -64,7 +67,7 @@ public class EasyDB {
         sharedPreferences.edit().putString(TOKEN, token).apply();
     }
 
-    public void Logout(){
+    public void Logout() {
         sharedPreferences.edit().putBoolean(LOGIN, false).apply();
         sharedPreferences.edit().putString(TOKEN, "").apply();
     }

@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * 基本的database model
  */
-public abstract class Model {
+public abstract class Model<T extends Model> {
 
     public abstract String getListKey();
 
@@ -31,7 +31,7 @@ public abstract class Model {
     }
 
 
-    final public String getGson() {
+    final private String getGson() {
         Gson gson = new Gson();
         return gson.toJson(this);
     }
@@ -103,12 +103,10 @@ public abstract class Model {
             Model item = gson.fromJson(arrayList.get(i), this.getClass());
             if (item.getUniqueId().equals(this.getUniqueId())) {
                 position = i;
-                break;
+                arrayList.set(position, this.getGson());
+                preferenceDB.putList(getListKey(), arrayList);
+                return;
             }
         }
-        if (position != -1) {
-            arrayList.set(position, this.getGson());
-        }
-        preferenceDB.putList(getListKey(), arrayList);
     }
 }
