@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
+
+    <LinearLayout
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:background="?android:attr/selectableItemBackground"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/marge_frame">
+
+
+        <com.easyapp.lib.widget.SquareFrameLayout
+            android:layout_width="@dimen/square_image_height"
+            android:layout_height="@dimen/square_image_height">
+
+            <ImageView
+                android:id="@+id/iv_picture"
+                android:layout_width="@dimen/square_image_height"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginRight="@dimen/marge_frame"
+                android:adjustViewBounds="true"
+                android:scaleType="centerInside" />
+        </com.easyapp.lib.widget.SquareFrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp"
+                android:ellipsize="end"
+                android:lines="2"
+                android:maxLines="2"
+                android:textAppearance="@android:style/TextAppearance.Small"
+                android:textColor="@color/dark_default_color" />
+
+
+            <TextView
+                android:id="@+id/tv_sub_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp"
+                android:textSize="13sp" />
+
+            <include layout="@layout/item_count" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_gravity="bottom"
+        android:background="@color/divider" />
+</FrameLayout>

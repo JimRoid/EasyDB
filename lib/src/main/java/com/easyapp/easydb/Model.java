@@ -97,7 +97,7 @@ public abstract class Model<T extends Model> {
     final public void update(Context context) {
         EasyDB preferenceDB = new EasyDB(context);
         ArrayList<String> arrayList = preferenceDB.getList(getListKey());
-        int position = arrayList.indexOf(this.getGson());
+        int position;
         Gson gson = new Gson();
         for (int i = 0; i < arrayList.size(); i++) {
             Model item = gson.fromJson(arrayList.get(i), this.getClass());
