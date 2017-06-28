@@ -146,20 +146,23 @@ public class EasyDB {
         return getFloatValue(key, 0f);
     }
 
-    public void putList(String key, ArrayList<String> strings) {
+    public boolean putList(String key, ArrayList<String> strings) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         String[] array = strings.toArray(new String[strings.size()]);
         // the comma like character used below is not a comma it is the SINGLE
         // LOW-9 QUOTATION MARK unicode 201A and unicode 2017 they are used for
         // seprating the items in the list
         editor.putString(key, TextUtils.join("‚‗‚", array));
-        editor.apply();
+        return editor.commit();
     }
 
     public ArrayList<String> getList(String key) {
         String[] split = TextUtils.split(sharedPreferences.getString(key, ""), "‚‗‚");
-        ArrayList<String> gottenlist = new ArrayList<String>(Arrays.asList(split));
-        return gottenlist;
+        ArrayList<String> strings = new ArrayList<>();
+        if (split.length > 0) {
+            strings.addAll(new ArrayList<>(Arrays.asList(split)));
+        }
+        return strings;
     }
 
 }

@@ -6,6 +6,7 @@ import com.easyapp.easydb.Model;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -174,7 +175,7 @@ public class ItemProduct implements Serializable {
              * a_number_biders : [{"bid_time":"2016-07-26 23:56:36:969","u_name":"StellaTest","p_name":"家樂福禮券 1000","p_period":"10000001"},{"bid_time":"2016-07-26 23:56:36:976","u_name":"StellaTest","p_name":"【 ARTBOX 】超次元29吋輕量PC鏡面鋁框行李箱 ART802-29玫瑰金","p_period":"10000001"},{"bid_time":"2016-07-26 23:56:37:391","u_name":"StellaTest","p_name":"家樂福禮券 1000","p_period":"10000001"},{"bid_time":"2016-07-26 23:56:37:404","u_name":"StellaTest","p_name":"【 ARTBOX 】超次元29吋輕量PC鏡面鋁框行李箱 ART802-29玫瑰金","p_period":"10000001"},{"bid_time":"2016-07-26 23:56:37:969","u_name":"StellaTest","p_name":"家樂福禮券 1000","p_period":"10000001"},{"bid_time":"2016-07-26 23:56:37:985","u_name":"StellaTest","p_name":"【 ARTBOX 】超次元29吋輕量PC鏡面鋁框行李箱 ART802-29玫瑰金","p_period":"10000001"},{"bid_time":"2016-07-26 23:56:38:402","u_name":"StellaTest","p_name":"家樂福禮券 1000","p_period":"10000001"},{"bid_time":"2016-07-26 23:56:38:409","u_name":"StellaTest","p_name":"【 ARTBOX 】超次元29吋輕量PC鏡面鋁框行李箱 ART802-29玫瑰金","p_period":"10000001"},{"bid_time":"2016-07-26 23:56:38:767","u_name":"StellaTest","p_name":"家樂福禮券 1000","p_period":"10000001"},{"bid_time":"2016-07-27 00:09:38:033","u_name":"StellaTest","p_name":"【 ARTBOX 】超次元29吋輕量PC鏡面鋁框行李箱 ART802-29玫瑰金","p_period":"10000001"},{"bid_time":"2016-07-26 23:56:38:776","u_name":"StellaTest","p_name":"【 ARTBOX 】超次元29吋輕量PC鏡面鋁框行李箱 ART802-29玫瑰金","p_period":"10000001"},{"bid_time":"2016-07-27 00:09:36:419","u_name":"StellaTest","p_name":"家樂福禮券 1000","p_period":"10000001"}]
              */
 
-            public static List<ItemProduct.DataBean.ContentBean> getAllList(Context context) {
+            public static ArrayList<ContentBean> getAllList(Context context) {
                 ContentBean bean = new ContentBean();
                 return bean.getAll(context);
             }

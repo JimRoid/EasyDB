@@ -9,7 +9,7 @@ import com.bumptech.glide.Glide;
 import com.easyapp.lib.base.fragment.list.BaseList;
 import com.easyapp.lib.widget.recyclerView.BaseRecyclerViewAdapter;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import appinfo.com.easyapp.easydblist.BaseValue;
 import appinfo.com.easyapp.easydblist.R;
@@ -32,7 +32,7 @@ public class ListSample extends BaseList<ListSample.ViewHolder, ItemProduct.Data
     @Override
     protected void onLoadMore() {
         setIsNoMore(true);
-        List<ItemProduct.DataBean.ContentBean> arrayList = ItemProduct.DataBean.ContentBean.getAllList(getContext());
+        ArrayList<ItemProduct.DataBean.ContentBean> arrayList = ItemProduct.DataBean.ContentBean.getAllList(getContext());
         addAll(arrayList);
     }
 

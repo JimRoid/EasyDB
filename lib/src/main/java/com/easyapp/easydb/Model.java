@@ -4,14 +4,15 @@ import android.content.Context;
 
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 基本的database model
  */
-public abstract class Model<T extends Model> {
+public abstract class Model {
 
     public abstract String getListKey();
 
@@ -48,14 +49,17 @@ public abstract class Model<T extends Model> {
      * @param context
      * @return
      */
-    final public List getAll(Context context) {
+    final public <T extends Model> ArrayList<T> getAll(Context context) {
         EasyDB preferenceDB = new EasyDB(context);
         ArrayList<String> arrayList = preferenceDB.getList(getListKey());
-        List shopCarItems = new ArrayList<>();
+        ArrayList<T> shopCarItems = new ArrayList<>();
         Gson gson = new Gson();
 
         for (int i = 0; i < arrayList.size(); i++) {
-            shopCarItems.add(gson.fromJson(arrayList.get(i), getClass()));
+            Type type = new TypeToken<T>() {
+            }.getType();
+            T t = gson.fromJson(arrayList.get(i), type);
+            shopCarItems.add(t);
         }
         return shopCarItems;
     }

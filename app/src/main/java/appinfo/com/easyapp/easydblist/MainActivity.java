@@ -23,6 +23,8 @@ public class MainActivity extends BaseMainActivity {
                 contentBean.setS_pic("https://scontent.cdninstagram.com/hphotos-xpt1/t51.2885-15/s640x640/e35/sh0.08/1168430_1445393992434882_664873294_n.jpg");
                 contentBean.save(MainActivity.this);
                 showToast("新增成功");
+
+
             }
         });
         setRight(menuView.getMenu());
