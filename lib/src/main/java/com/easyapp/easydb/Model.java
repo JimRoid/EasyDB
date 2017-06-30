@@ -27,7 +27,7 @@ public abstract class Model {
         return uniqueId;
     }
 
-    private void setUniqueId(String uniqueId) {
+    public void setUniqueId(String uniqueId) {
         this.uniqueId = uniqueId;
     }
 
