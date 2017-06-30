@@ -4,10 +4,10 @@ import android.content.Context;
 
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
-import com.google.gson.reflect.TypeToken;
+import com.google.gson.internal.Primitives;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 基本的database model
@@ -52,16 +52,16 @@ public abstract class Model {
     final public <T extends Model> ArrayList<T> getAll(Context context) {
         EasyDB preferenceDB = new EasyDB(context);
         ArrayList<String> arrayList = preferenceDB.getList(getListKey());
-        ArrayList<T> shopCarItems = new ArrayList<>();
+        List list = new ArrayList();
+        ArrayList<T> items = new ArrayList<>();
         Gson gson = new Gson();
 
         for (int i = 0; i < arrayList.size(); i++) {
-            Type type = new TypeToken<T>() {
-            }.getType();
-            T t = gson.fromJson(arrayList.get(i), type);
-            shopCarItems.add(t);
+            Object object = gson.fromJson(arrayList.get(i), getClass());
+            list.add(Primitives.wrap(getClass()).cast(object));
         }
-        return shopCarItems;
+        items.addAll(list);
+        return items;
     }
 
 
