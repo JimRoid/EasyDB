@@ -16,7 +16,6 @@ public abstract class Model {
 
     public abstract String getListKey();
 
-
     /**
      * 唯一值不可操作
      */
@@ -39,8 +38,8 @@ public abstract class Model {
 
 
     final public void removeAll(Context context) {
-        EasyDB preferenceDB = new EasyDB(context);
-        preferenceDB.putList(getListKey(), new ArrayList<String>());
+        EasyDB easyDB = new EasyDB(context);
+        easyDB.putList(getListKey(), new ArrayList<String>());
     }
 
     /**
@@ -71,13 +70,16 @@ public abstract class Model {
      * @param context
      */
     public void delete(Context context) {
-        EasyDB preferenceDB = new EasyDB(context);
-        ArrayList<String> arrayList = preferenceDB.getList(getListKey());
-        int position = arrayList.indexOf(this.getGson());
-        if (position != -1) {
-            arrayList.remove(position);
+        EasyDB easyDB = new EasyDB(context);
+        ArrayList<String> arrayList = easyDB.getList(getListKey());
+        Gson gson = new Gson();
+        for (int i = 0; i < arrayList.size(); i++) {
+            Model item = gson.fromJson(arrayList.get(i), this.getClass());
+            if (item.getUniqueId().equals(this.getUniqueId())) {
+                arrayList.remove(i);
+                easyDB.putList(getListKey(), arrayList);
+            }
         }
-        preferenceDB.putList(getListKey(), arrayList);
     }
 
     /**
@@ -86,11 +88,11 @@ public abstract class Model {
      * @param context
      */
     final public void save(Context context) {
-        EasyDB preferenceDB = new EasyDB(context);
-        ArrayList<String> arrayList = preferenceDB.getList(getListKey());
-        this.setUniqueId(preferenceDB.RandUUID());
+        EasyDB easyDB = new EasyDB(context);
+        ArrayList<String> arrayList = easyDB.getList(getListKey());
+        this.setUniqueId(easyDB.RandUUID());
         arrayList.add(this.getGson());
-        preferenceDB.putList(getListKey(), arrayList);
+        easyDB.putList(getListKey(), arrayList);
     }
 
     /**
@@ -99,8 +101,8 @@ public abstract class Model {
      * @param context
      */
     final public void update(Context context) {
-        EasyDB preferenceDB = new EasyDB(context);
-        ArrayList<String> arrayList = preferenceDB.getList(getListKey());
+        EasyDB easyDB = new EasyDB(context);
+        ArrayList<String> arrayList = easyDB.getList(getListKey());
         int position;
         Gson gson = new Gson();
         for (int i = 0; i < arrayList.size(); i++) {
@@ -108,7 +110,7 @@ public abstract class Model {
             if (item.getUniqueId().equals(this.getUniqueId())) {
                 position = i;
                 arrayList.set(position, this.getGson());
-                preferenceDB.putList(getListKey(), arrayList);
+                easyDB.putList(getListKey(), arrayList);
                 return;
             }
         }
