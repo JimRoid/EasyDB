@@ -6,13 +6,14 @@ import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.internal.Primitives;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * 基本的database model
  */
-public abstract class Model {
+public abstract class Model implements Serializable {
 
     public abstract String getListKey();
 
