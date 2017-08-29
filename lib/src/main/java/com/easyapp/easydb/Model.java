@@ -4,11 +4,10 @@ import android.content.Context;
 
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
-import com.google.gson.internal.Primitives;
 
 import java.io.Serializable;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 基本的database model
@@ -50,17 +49,16 @@ public abstract class Model implements Serializable {
      * @return
      */
     final public <T extends Model> ArrayList<T> getAll(Context context) {
-        EasyDB preferenceDB = new EasyDB(context);
-        ArrayList<String> arrayList = preferenceDB.getList(getListKey());
-        List list = new ArrayList();
+        EasyDB easyDB = new EasyDB(context);
+        ArrayList<String> arrayList = easyDB.getList(getListKey());
         ArrayList<T> items = new ArrayList<>();
         Gson gson = new Gson();
 
         for (int i = 0; i < arrayList.size(); i++) {
-            Object object = gson.fromJson(arrayList.get(i), getClass());
-            list.add(Primitives.wrap(getClass()).cast(object));
+            Class classOfT = getClass();
+            T t = gson.fromJson(arrayList.get(i), (Type) classOfT);
+            items.add(t);
         }
-        items.addAll(list);
         return items;
     }
 
