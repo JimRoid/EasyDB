@@ -16,10 +16,24 @@ public abstract class SingleModel {
 
     public abstract String getSingleKey();
 
+    public SingleModel() {
+        super();
+    }
+
     public String getGson() {
         Gson gson = new Gson();
         return gson.toJson(this);
     }
+
+//    public static <T extends SingleModel> T restore(Context context) {
+//        T t = null;
+//        EasyDB easyDB = new EasyDB(context);
+//        String value = easyDB.getStringValue(t.getSingleKey());
+//        Gson gson = new Gson();
+//        Class classOfT = t.getClass();
+//        t = gson.fromJson(value, (Type) classOfT);
+//        return t;
+//    }
 
     final public <T extends SingleModel> T getStore(Context context) {
         EasyDB easyDB = new EasyDB(context);

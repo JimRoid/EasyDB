@@ -42,6 +42,7 @@ public abstract class Model implements Serializable {
         easyDB.putList(getListKey(), new ArrayList<String>());
     }
 
+
     /**
      * 取回所有項目
      *
