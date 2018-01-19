@@ -1,5 +1,6 @@
 package com.easyapp.easydb;
 
+import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
@@ -13,48 +14,36 @@ import java.util.UUID;
  * 可儲存成列表
  */
 public class EasyDB {
-    private final String FIRST = "FIRST";
-    private final String USER_UUID = "USER_UUID";
-    private final String LOGIN = "LOGIN";
-    private final String TOKEN = "TOKEN";
-    private SharedPreferences sharedPreferences;
 
-    public EasyDB(Context context) {
-        if (context != null) {
+    private static final String LOGIN = "LOGIN";
+    private static final String TOKEN = "TOKEN";
+
+
+    private static SharedPreferences initial(Context context) {
+        try {
             String packageName = context.getPackageName();
-            sharedPreferences = context.getSharedPreferences(packageName, Context.MODE_PRIVATE);
+            return context.getSharedPreferences(packageName, Context.MODE_PRIVATE);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
-            if (isFirst()) {
-                GenUUID();
-            }
+    public void clear(Context context) {
+        SharedPreferences sharedPreferences = initial(context);
+        if (sharedPreferences != null) {
+            sharedPreferences.edit().clear().apply();
         }
     }
-
-    public void clear() {
-        sharedPreferences.edit().clear().apply();
-    }
-
-    /**
-     * 建立第一次進入的token
-     */
-    private void GenUUID() {
-        sharedPreferences.edit().putString(USER_UUID, RandUUID()).apply();
-        sharedPreferences.edit().putBoolean(FIRST, false).apply();
-    }
-
 
     /**
      * 建立隨機的uuid
      *
      * @return uuid
      */
-    public String RandUUID() {
+    public static String RandUUID() {
         UUID uuid = UUID.randomUUID();
         return uuid.toString();
-    }
-
-    public String getUUID() {
-        return sharedPreferences.getString(USER_UUID, "");
     }
 
     /**
@@ -62,91 +51,145 @@ public class EasyDB {
      *
      * @param token
      */
-    public void Login(String token) {
-        sharedPreferences.edit().putBoolean(LOGIN, true).apply();
-        sharedPreferences.edit().putString(TOKEN, token).apply();
+    public static void Login(Context context, String token) {
+        SharedPreferences sharedPreferences = initial(context);
+        if (sharedPreferences != null) {
+            sharedPreferences.edit().putBoolean(LOGIN, true).apply();
+            sharedPreferences.edit().putString(TOKEN, token).apply();
+        }
     }
 
-    public void Logout() {
-        sharedPreferences.edit().putBoolean(LOGIN, false).apply();
-        sharedPreferences.edit().putString(TOKEN, "").apply();
+    public static void Logout(Context context) {
+        SharedPreferences sharedPreferences = initial(context);
+        if (sharedPreferences != null) {
+            sharedPreferences.edit().putBoolean(LOGIN, false).apply();
+            sharedPreferences.edit().putString(TOKEN, "").apply();
+        }
     }
 
-
-    public String getToken() {
+    public static String getToken(Context context) {
+        SharedPreferences sharedPreferences = initial(context);
+        if (sharedPreferences == null) {
+            return "";
+        }
         return sharedPreferences.getString(TOKEN, "");
     }
 
-    public boolean isLogin() {
+    public static boolean isLogin(Context context) {
+        SharedPreferences sharedPreferences = initial(context);
+        if (sharedPreferences == null) {
+            return false;
+        }
         return sharedPreferences.getBoolean(LOGIN, false);
     }
 
-    public boolean isFirst() {
-        return sharedPreferences.getBoolean(FIRST, true);
-    }
 
-    public boolean putString(String key, String value) {
+    public static boolean putString(Context context, String key, String value) {
+        SharedPreferences sharedPreferences = initial(context);
+        if (sharedPreferences == null) {
+            return false;
+        }
         return sharedPreferences.edit().putString(key, value).commit();
     }
 
-    public boolean putBoolean(String key, boolean value) {
+    public static boolean putBoolean(Context context, String key, boolean value) {
+        SharedPreferences sharedPreferences = initial(context);
+        if (sharedPreferences == null) {
+            return false;
+        }
         return sharedPreferences.edit().putBoolean(key, value).commit();
     }
 
-    public boolean putInt(String key, int value) {
+    public static boolean putInt(Context context, String key, int value) {
+        SharedPreferences sharedPreferences = initial(context);
+        if (sharedPreferences == null) {
+            return false;
+        }
         return sharedPreferences.edit().putInt(key, value).commit();
     }
 
-    public boolean putLong(String key, long value) {
+    public static boolean putLong(Context context, String key, long value) {
+        SharedPreferences sharedPreferences = initial(context);
+        if (sharedPreferences == null) {
+            return false;
+        }
         return sharedPreferences.edit().putLong(key, value).commit();
     }
 
-    public boolean putFloat(String key, float value) {
+    public static boolean putFloat(Context context, String key, float value) {
+        SharedPreferences sharedPreferences = initial(context);
+        if (sharedPreferences == null) {
+            return false;
+        }
         return sharedPreferences.edit().putFloat(key, value).commit();
     }
 
-    public String getStringValue(String key, String value) {
+    public static String getStringValue(Context context, String key, String value) {
+        SharedPreferences sharedPreferences = initial(context);
+        if (sharedPreferences == null) {
+            return "";
+        }
         return sharedPreferences.getString(key, value);
     }
 
 
-    public String getStringValue(String key) {
-        return getStringValue(key, "");
+    public static String getStringValue(Context context, String key) {
+        return getStringValue(context, key, "");
     }
 
-    public boolean getBooleanValue(String key, boolean value) {
+    public static boolean getBooleanValue(Context context, String key, boolean value) {
+        SharedPreferences sharedPreferences = initial(context);
+        if (sharedPreferences == null) {
+            return false;
+        }
         return sharedPreferences.getBoolean(key, value);
     }
 
-    public boolean getBooleanValue(String key) {
-        return getBooleanValue(key, false);
+    public static boolean getBooleanValue(Context context, String key) {
+        return getBooleanValue(context, key, false);
     }
 
-    public int getIntValue(String key, int value) {
+    public static int getIntValue(Context context, String key, int value) {
+        SharedPreferences sharedPreferences = initial(context);
+        if (sharedPreferences == null) {
+            return 0;
+        }
         return sharedPreferences.getInt(key, value);
     }
 
-    public int getIntValue(String key) {
-        return getIntValue(key, 0);
+    public static int getIntValue(Context context, String key) {
+        return getIntValue(context, key, 0);
     }
 
-    public long getLongValue(String key, long value) {
+    public static long getLongValue(Context context, String key, long value) {
+        SharedPreferences sharedPreferences = initial(context);
+        if (sharedPreferences == null) {
+            return 0L;
+        }
         return sharedPreferences.getLong(key, value);
     }
 
-    public long getLongValue(String key) {
-        return getLongValue(key, 0);
+    public static long getLongValue(Context context, String key) {
+        return getLongValue(context, key, 0);
     }
 
-    public float getFloatValue(String key, float value) {
+    public static float getFloatValue(Context context, String key, float value) {
+        SharedPreferences sharedPreferences = initial(context);
+        if (sharedPreferences == null) {
+            return 0f;
+        }
         return sharedPreferences.getFloat(key, value);
     }
 
-    public float getFloatValue(String key) {
-        return getFloatValue(key, 0f);
+    public static float getFloatValue(Context context, String key) {
+        return getFloatValue(context, key, 0f);
     }
 
-    public boolean putList(String key, ArrayList<String> strings) {
+    public static boolean putList(Context context, String key, ArrayList<String> strings) {
+        SharedPreferences sharedPreferences = initial(context);
+        if (sharedPreferences == null) {
+            return false;
+        }
         SharedPreferences.Editor editor = sharedPreferences.edit();
         String[] array = strings.toArray(new String[strings.size()]);
         // the comma like character used below is not a comma it is the SINGLE
@@ -156,7 +199,12 @@ public class EasyDB {
         return editor.commit();
     }
 
-    public ArrayList<String> getList(String key) {
+    public static ArrayList<String> getList(Context context, String key) {
+        SharedPreferences sharedPreferences = initial(context);
+        if (sharedPreferences == null) {
+            return new ArrayList<>();
+        }
+
         String[] split = TextUtils.split(sharedPreferences.getString(key, ""), "‚‗‚");
         ArrayList<String> strings = new ArrayList<>();
         if (split.length > 0) {
