@@ -22,7 +22,7 @@ android {
 }
 
 dependencies {
-    compile 'com.google.code.gson:gson:2.7'
+    implementation 'com.google.code.gson:gson:2.8.2'
 }
 
 uploadArchives {

@@ -39,6 +39,7 @@ public abstract class SingleModel {
         String value = EasyDB.getStringValue(context, getSingleKey());
         Gson gson = new Gson();
         Class classOfT = getClass();
+        gson.fromJson(value, (Type) classOfT);
         return gson.fromJson(value, (Type) classOfT);
     }
 
